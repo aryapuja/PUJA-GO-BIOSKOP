@@ -13,9 +13,10 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/bioskop", handler.CreateBioskop)
-	// r.GET("/bioskop", handler.GetBioskop)
-	// r.PUT("/bioskop", handler.UpdateBioskop)
-	// r.DELETE("/bioskop/:id", handler.DeleteBioskop)
+	r.GET("/bioskop", handler.GetBioskop)
+	r.GET("/bioskop/:id", handler.GetBioskopInfo)
+	r.PUT("/bioskop/:id", handler.UpdateBioskop)
+	r.DELETE("/bioskop/:id", handler.DeleteBioskop)
 
 	r.Run(":8080")
 }
