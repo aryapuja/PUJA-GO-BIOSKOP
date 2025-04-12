@@ -48,7 +48,8 @@ func CreateBioskop(ctx *gin.Context) {
 
 // GET
 func GetBioskop(ctx *gin.Context) {
-	rows, err := database.DB.Query("SELECT id, nama, lokasi, rating FROM bioskop")
+	rows, err := database.DB.Query("SELECT id, nama, lokasi, rating FROM railway")
+	// rows, err := database.DB.Query("SELECT id, nama, lokasi, rating FROM bioskop")
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -77,7 +78,8 @@ func GetBioskopInfo(ctx *gin.Context) {
 
 	// Cek ID bioskop
 	var exists bool
-	err := database.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM bioskop WHERE id = $1)", id).Scan(&exists)
+	err := database.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM railway WHERE id = $1)", id).Scan(&exists)
+	// err := database.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM bioskop WHERE id = $1)", id).Scan(&exists)
 	if err != nil || !exists {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"error": fmt.Sprintf("Bioskop dengan ID %v tidak ditemukan", id),
@@ -85,7 +87,8 @@ func GetBioskopInfo(ctx *gin.Context) {
 		return
 	}
 
-	err = database.DB.QueryRow("SELECT id, nama, lokasi, rating FROM bioskop WHERE id=$1", id).Scan(&bioskop.ID, &bioskop.Nama, &bioskop.Lokasi, &bioskop.Rating)
+	err = database.DB.QueryRow("SELECT id, nama, lokasi, rating FROM railway WHERE id=$1", id).Scan(&bioskop.ID, &bioskop.Nama, &bioskop.Lokasi, &bioskop.Rating)
+	// err = database.DB.QueryRow("SELECT id, nama, lokasi, rating FROM bioskop WHERE id=$1", id).Scan(&bioskop.ID, &bioskop.Nama, &bioskop.Lokasi, &bioskop.Rating)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -105,7 +108,8 @@ func UpdateBioskop(ctx *gin.Context) {
 
 	// Cek ID bioskop
 	var exists bool
-	err := database.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM bioskop WHERE id = $1)", id).Scan(&exists)
+	err := database.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM railway WHERE id = $1)", id).Scan(&exists)
+	// err := database.DB.QueryRow("SELECT EXISTS(SELECT 1 FROM bioskop WHERE id = $1)", id).Scan(&exists)
 	if err != nil || !exists {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"error": fmt.Sprintf("Bioskop dengan ID %v tidak ditemukan", id),
@@ -164,7 +168,8 @@ func UpdateBioskop(ctx *gin.Context) {
 func DeleteBioskop(ctx *gin.Context) {
 	id := ctx.Param("id")
 
-	result, err := database.DB.Exec("DELETE FROM bioskop WHERE id = $1", id)
+	result, err := database.DB.Exec("DELETE FROM railway WHERE id = $1", id)
+	// result, err := database.DB.Exec("DELETE FROM bioskop WHERE id = $1", id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
