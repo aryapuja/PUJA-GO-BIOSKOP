@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	database "puja_go_bioskop/db"
 	"puja_go_bioskop/handler"
 
@@ -18,5 +19,10 @@ func main() {
 	r.PUT("/bioskop/:id", handler.UpdateBioskop)
 	r.DELETE("/bioskop/:id", handler.DeleteBioskop)
 
-	r.Run(":8080")
+	// r.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // fallback ke 8080 kalau belum ada
+	}
+	r.Run(":" + port)
 }
